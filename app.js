@@ -1,6 +1,15 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 const port = process.env.PORT || 3000;
+
+//Conexion mongodb
+const mongoose = require('mongoose');
+const uri = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@cluster0.tmbrf.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`;
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("Connect to mondodb success!"))
+    .catch(e => console.log(e))
 
 // Motor de plantilla
 app.set("view engine", "ejs");
@@ -8,18 +17,9 @@ app.set("views", __dirname + "/views");
 
 app.use(express.static(__dirname + '/public'));
 
-
-app.get('/', (req, res) => {
-    res.render("index", { title: "Titulo dinamico" });
-});
-
-app.get('/services', (req, res) => {
-    res.render("services", { title: "Nuestros servicios" });
-});
-
-app.get('/contact', (req, res) => {
-    res.render("contact", { title: "Nuestro contacto" });
-});
+//Rutas
+app.use('/', require('./router/web'));
+app.use('/pets', require('./router/pets'));
 
 app.use((req, res, next) => {
     res.status(404).render("404");

@@ -1,0 +1,38 @@
+<%- include("templates/header", {title:'Home'}) %>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (pets.length > 0) { %>
+                    <% pets.forEach(pet => { %>
+
+                        <tr>
+                            <th scope="row">
+                                <%= pet.id %>
+                            </th>
+                            <td>
+                                <%= pet.name %>
+                            </td>
+                            <td>
+                                <%= pet.description %>
+                            </td>
+                            <td>
+                                Edit-Delete
+                            </td>
+                        </tr>
+
+                        <% }) %>
+                            <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <%- include("templates/footer") %>

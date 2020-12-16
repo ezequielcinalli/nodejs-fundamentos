@@ -1,13 +1,10 @@
 <%- include("templates/header", {title:'Home'}) %>
 
-    <body>
-        <%- include("templates/navbar") %>
+    <div class="container">
+        <h1>Titulo del sitio home</h1>
+        <h2>
+            <%= title %>
+        </h2>
+    </div>
 
-            <div class="container">
-                <h1>Titulo del sitio home</h1>
-                <h2>
-                    <%= title %>
-                </h2>
-            </div>
-
-            <%- include("templates/footer") %>
+    <%- include("templates/footer") %>
