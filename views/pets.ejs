@@ -1,10 +1,12 @@
-<%- include("templates/header", {title:'Home'}) %>
+<%- include("templates/header", {title:'Pets'}) %>
 
     <div class="container">
+        <h1>CRUD Pets MongoDB</h1>
+        <a href="pets/create" class="btn btn-primary btn-block my-4">Create new pet</a>
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">Pet ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
                     <th scope="col">Action</th>
@@ -25,7 +27,8 @@
                                 <%= pet.description %>
                             </td>
                             <td>
-                                Edit-Delete
+                                <a href="pets/<%= pet.id %>" class="btn btn-warning">Edit</a>
+                                <btn data-id="<%= pet.id %>" class="btn btn-danger btnDelete">Delete</btn>
                             </td>
                         </tr>
 
@@ -34,5 +37,26 @@
             </tbody>
         </table>
     </div>
+
+    <script>
+        const buttonsDelete = document.querySelectorAll(".btnDelete")
+        buttonsDelete.forEach(btn => {
+            btn.addEventListener('click', async(event) => {
+                try {
+                    const data = await fetch(`/pets/${event.srcElement.dataset.id}`, {
+                        method: 'delete'
+                    })
+                    const res = await data.json()
+                    if (res.state) {
+                        window.location.href = '/pets'
+                    } else {
+                        console.log(res)
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            })
+        });
+    </script>
 
     <%- include("templates/footer") %>

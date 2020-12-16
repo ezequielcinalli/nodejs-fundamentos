@@ -1,0 +1,55 @@
+<%- include("../templates/header", {title:'Pet detail'}) %>
+
+    <div class="container">
+
+        <h1>Detail pet</h1>
+        <% if (error) { %>
+            <p>Not exist pet with the id selected!</p>
+            <a href="pets" class="btn btn-dark">Return</a>
+            <% } %>
+
+                <% if (!error) { %>
+                    <form id="formEdit" class="my-2" data-id="<%= pet.id %> ">
+                        <label for="name">Name</label>
+                        <input type="text" value="<%= pet.name %>" class="form-control my-2" id="name">
+
+                        <label for="name">Description</label>
+                        <input type="text" value="<%= pet.description %>" class="form-control my-2" id="description">
+
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                        <a href="/pets" class="btn btn-danger">Return</a>
+                    </form>
+                    <% } %>
+
+    </div>
+
+    <script>
+        const formEdit = document.querySelector('#formEdit');
+        formEdit.addEventListener("submit", async(e) => {
+            e.preventDefault();
+            const id = formEdit.dataset.id;
+            const formdata = {
+                name: document.querySelector("#name").value,
+                description: document.querySelector("#description").value
+            }
+            try {
+                const data = await fetch(`/pets/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formdata)
+                });
+                const res = await data.json();
+                if (res.state) {
+                    window.location.href = '/pets';
+                } else {
+                    console.log(res);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        });
+    </script>
+
+    <%- include("../templates/footer") %>

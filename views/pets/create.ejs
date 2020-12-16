@@ -1,0 +1,20 @@
+<%- include("../templates/header", {title:'Pets'}) %>
+
+    <div class="container">
+
+        <h1>Create new pet</h1>
+
+        <form action="/pets" class="my-2" method="POST">
+            <label for="name">Name</label>
+            <input type="text" placeholder="Name" class="form-control my-2" name="name">
+
+            <label for="name">Description</label>
+            <input type="text" placeholder="Description" class="form-control my-2" name="description">
+
+            <button type="submit" class="btn btn-success btn-block">Create</button>
+        </form>
+        <a href="/pets" class="btn btn-danger btn-block my-4">Cancel</a>
+
+    </div>
+
+    <%- include("../templates/footer") %>
